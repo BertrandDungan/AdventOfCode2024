@@ -25,10 +25,9 @@ public static partial class Week1
 
     public static int GetSimilarityScore(string input)
     {
-        var group1 = GetFirstHalf(input).Distinct();
         var group2 = GetSecondHalf(input);
 
-        var similarityTracker = group1.ToDictionary(value => value, _ => 0);
+        var similarityTracker = GetFirstHalf(input).Distinct().ToDictionary(value => value, _ => 0);
 
         foreach (var number in group2)
         {
@@ -38,9 +37,7 @@ public static partial class Week1
             }
         }
 
-        var similarityScoreSum = similarityTracker.Select(pair => pair.Key * pair.Value).Sum();
-
-        return similarityScoreSum;
+        return similarityTracker.Select(pair => pair.Key * pair.Value).Sum();
     }
 
     private static IEnumerable<int> GetFirstHalf(string input)
