@@ -13,8 +13,8 @@ public static partial class Week1
 
     private static IEnumerable<(int First, int Second)> FindPairs(string input)
     {
-        var group1 = FirstHalf().Matches(input).Select(match => int.Parse(match.Value)).OrderDescending();
-        var group2 = SecondHalf().Matches(input).Select(match => int.Parse(match.Value)).OrderDescending();
+        var group1 = GetFirstHalf(input).OrderDescending();
+        var group2 = GetSecondHalf(input).OrderDescending();
         return group1.Zip(group2);
     }
 
@@ -25,8 +25,8 @@ public static partial class Week1
 
     public static int GetSimilarityScore(string input)
     {
-        var group1 = FirstHalf().Matches(input).Select(match => int.Parse(match.Value)).Distinct();
-        var group2 = SecondHalf().Matches(input).Select(match => int.Parse(match.Value));
+        var group1 = GetFirstHalf(input).Distinct();
+        var group2 = GetSecondHalf(input);
 
         var similarityTracker = group1.ToDictionary(value => value, _ => 0);
 
@@ -41,6 +41,16 @@ public static partial class Week1
         var similarityScoreSum = similarityTracker.Select(pair => pair.Key * pair.Value).Sum();
 
         return similarityScoreSum;
+    }
+
+    private static IEnumerable<int> GetFirstHalf(string input)
+    {
+        return FirstHalf().Matches(input).Select(match => int.Parse(match.Value));
+    }
+
+    private static IEnumerable<int> GetSecondHalf(string input)
+    {
+        return SecondHalf().Matches(input).Select(match => int.Parse(match.Value));
     }
 
     [GeneratedRegex("([0-9]+) ")]
