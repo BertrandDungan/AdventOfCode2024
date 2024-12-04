@@ -10,19 +10,7 @@ public static partial class Day1
         var distances = pairs.Select(GetPairDifference);
         return distances.Sum();
     }
-
-    private static IEnumerable<(int First, int Second)> FindPairs(string input)
-    {
-        var group1 = GetFirstHalf(input).OrderDescending();
-        var group2 = GetSecondHalf(input).OrderDescending();
-        return group1.Zip(group2);
-    }
-
-    private static int GetPairDifference((int First, int Second) input)
-    {
-        return Math.Abs(input.First - input.Second);
-    }
-
+    
     public static int GetSimilarityScore(string input)
     {
         var group2 = GetSecondHalf(input);
@@ -38,6 +26,18 @@ public static partial class Day1
         }
 
         return similarityTracker.Select(pair => pair.Key * pair.Value).Sum();
+    }
+
+    private static IEnumerable<(int First, int Second)> FindPairs(string input)
+    {
+        var group1 = GetFirstHalf(input).OrderDescending();
+        var group2 = GetSecondHalf(input).OrderDescending();
+        return group1.Zip(group2);
+    }
+
+    private static int GetPairDifference((int First, int Second) input)
+    {
+        return Math.Abs(input.First - input.Second);
     }
 
     private static IEnumerable<int> GetFirstHalf(string input)
