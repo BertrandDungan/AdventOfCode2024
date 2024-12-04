@@ -1,8 +1,8 @@
 using System.Text.RegularExpressions;
 
-namespace AdventOfCode2024.Week1;
+namespace AdventOfCode2024.Day1;
 
-public static partial class Week1
+public static partial class Day1
 {
     public static int GetTotalDistance(string input)
     {
