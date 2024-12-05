@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace AdventOfCode2024.Day1;
 
-public static partial class Day1
+public static class Day1
 {
     public static int GetTotalDistance(string input)
     {
@@ -10,7 +10,7 @@ public static partial class Day1
         var distances = pairs.Select(GetPairDifference);
         return distances.Sum();
     }
-    
+
     public static int GetSimilarityScore(string input)
     {
         var group2 = GetSecondHalf(input);
@@ -42,17 +42,20 @@ public static partial class Day1
 
     private static IEnumerable<int> GetFirstHalf(string input)
     {
-        return FirstHalf().Matches(input).Select(match => int.Parse(match.Value));
+        return ListFinder.FirstHalf().Matches(input).Select(match => int.Parse(match.Value));
     }
 
     private static IEnumerable<int> GetSecondHalf(string input)
     {
-        return SecondHalf().Matches(input).Select(match => int.Parse(match.Value));
+        return ListFinder.SecondHalf().Matches(input).Select(match => int.Parse(match.Value));
     }
+}
 
+internal static partial class ListFinder
+{
     [GeneratedRegex("([0-9]+) ")]
-    private static partial Regex FirstHalf();
+    public static partial Regex FirstHalf();
 
     [GeneratedRegex(" ([0-9]+)")]
-    private static partial Regex SecondHalf();
+    public static partial Regex SecondHalf();
 }
