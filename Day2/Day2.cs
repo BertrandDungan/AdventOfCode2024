@@ -12,16 +12,20 @@ public static class Day2
     public static int GetSafeReportsWithOneMistake(string input)
     {
         var reports = GetReportLevels(input);
-        var safeReports = reports.Where(ReportIsTolerablySafe);
+        var safeReports = reports.Where(
+            report => ReportIsCompletelySafe(report) | ReportIsTolerablySafe(report)
+        );
         return safeReports.Count();
     }
 
-    private static IEnumerable<IEnumerable<int>> GetReportLevels(string reports)
+    private static List<List<int>> GetReportLevels(string reports)
     {
-        return reports.Split('\n').Select(report => report.Split(' ').Select(int.Parse));
+        return reports.Split('\n').Select(
+            report => report.Split(' ').Select(int.Parse).ToList()
+        ).ToList();
     }
 
-    private static bool ReportIsCompletelySafe(IEnumerable<int> report)
+    private static bool ReportIsCompletelySafe(List<int> report)
     {
         var comparisonLevel = report.First();
         var levelSign = Math.Sign(comparisonLevel - report.ElementAt(1));
@@ -41,35 +45,19 @@ public static class Day2
         return true;
     }
 
-    private static bool ReportIsTolerablySafe(IEnumerable<int> report)
+    private static bool ReportIsTolerablySafe(List<int> report)
     {
-        var comparisonLevel = report.First();
-        var levelSign = Math.Sign(comparisonLevel - report.ElementAt(1));
-
-        foreach (var level in report.Skip(1))
-        {
-            var levelDifference = Math.Abs(comparisonLevel - level);
-            var levelSignDiff = Math.Sign(comparisonLevel - level);
-            if (levelDifference > 3 || levelDifference == 0 || levelSign != levelSignDiff)
-            {
-                var alternativePermutations = GetReportPermutations(report);
-                return alternativePermutations.Any(ReportIsCompletelySafe);
-            }
-
-            comparisonLevel = level;
-        }
-
-        return true;
+        var alternativePermutations = GetReportPermutations(report);
+        return alternativePermutations.Any(ReportIsCompletelySafe);
     }
 
-    private static IEnumerable<IEnumerable<int>> GetReportPermutations(IEnumerable<int> report)
+    private static List<List<int>> GetReportPermutations(List<int> report)
     {
-        var permutations = new List<IEnumerable<int>>();
-        for (var currentIndex = 0; currentIndex < report.Count(); currentIndex++)
-        {
-            permutations.Add(report.Where((_, comparisonIndex) => comparisonIndex != currentIndex).ToList());
-        }
-
-        return permutations;
+        return report.Select(
+            (_, currentIndex) =>
+                report.Where(
+                    (_, comparisonIndex) => comparisonIndex != currentIndex
+                ).ToList()
+        ).ToList();
     }
 }
