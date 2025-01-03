@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Text.RegularExpressions;
 
 namespace AdventOfCode2024.Day3;
@@ -16,25 +15,30 @@ public static class Day3
 
     public static int GetInstructionResult(string input)
     {
-        var instuctions = GetInstructions(input);
+        var instructions = GetInstructions(input);
 
         var shouldPerformInstruction = true;
         var result = 0;
-        foreach (var instruction in instuctions)
+        foreach (var instruction in instructions)
         {
-            if (instruction.Equals("do()"))
+            switch (instruction)
             {
-                shouldPerformInstruction = true;
-            }
-            else if (instruction.Equals("don't()"))
-            {
-                shouldPerformInstruction = false;
-            }
+                case "do()":
+                    shouldPerformInstruction = true;
+                    break;
+                case "don't()":
+                    shouldPerformInstruction = false;
+                    break;
+                default:
+                {
+                    if (shouldPerformInstruction)
+                    {
+                        var splitNumbers = instruction.Split(",").Select(int.Parse).ToArray();
+                        result += splitNumbers[0] * splitNumbers[1];
+                    }
 
-            else if (shouldPerformInstruction)
-            {
-                var splitNumbers = instruction.Split(",").Select(int.Parse);
-                result += splitNumbers.First() * splitNumbers.Last();
+                    break;
+                }
             }
         }
 
