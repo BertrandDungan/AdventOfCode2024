@@ -2,6 +2,6 @@
 using AdventOfCode2024.Day3;
 
 var input = InputParsing.LoadTextResource("Day3\\Input.txt");
-var part1Result = Day3.GetMultiplicationResult(input);
+var part1Result = Day3.GetInstructionResult(input);
 
-Console.WriteLine($"Part 1: {part1Result}");
+Console.WriteLine($"Part 2: {part1Result}");
