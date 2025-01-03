@@ -1,7 +1,7 @@
 ﻿using AdventOfCode2024.Helpers;
-using AdventOfCode2024.Day3;
+using AdventOfCode2024.Day4;
 
-var input = InputParsing.LoadTextResource("Day3\\Input.txt");
-var part1Result = Day3.GetInstructionResult(input);
+var input = InputParsing.LoadTextResource("Day4\\TestInput.txt");
+var part1Result = Day4.ChristmasCount(input);
 
-Console.WriteLine($"Part 2: {part1Result}");
+Console.WriteLine($"Part 1: {part1Result}");
