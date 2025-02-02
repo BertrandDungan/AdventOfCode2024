@@ -81,7 +81,7 @@ public static class Day4
 
     private static int CheckSe(char[][] input, int currX, int currY, int lineIndexLength)
     {
-        if (currY + CheckDistance < input.Length - 1 &&
+        if (currY + CheckDistance <= input.Length - 1 &&
             currX + CheckDistance < lineIndexLength &&
             input[currY + 1][currX + 1] == 'M' &&
             input[currY + 2][currX + 2] == 'A' &&
@@ -95,7 +95,7 @@ public static class Day4
 
     private static int CheckS(char[][] input, int currX, int currY)
     {
-        if (currY + CheckDistance < input.Length - 1 &&
+        if (currY + CheckDistance <= input.Length - 1 &&
             input[currY + 1][currX] == 'M' &&
             input[currY + 2][currX] == 'A' &&
             input[currY + 3][currX] == 'S')
@@ -108,7 +108,7 @@ public static class Day4
 
     private static int CheckSw(char[][] input, int currX, int currY)
     {
-        if (currY + CheckDistance < input.Length - 1 &&
+        if (currY + CheckDistance <= input.Length - 1 &&
             currX - CheckDistance >= 0 &&
             input[currY + 1][currX - 1] == 'M' &&
             input[currY + 2][currX - 2] == 'A' &&
